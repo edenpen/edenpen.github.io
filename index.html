@@ -69,7 +69,8 @@ ul.plain li{padding:.35rem 0}
 .photo{width:100%;aspect-ratio:2/3;object-fit:cover;border:2px solid var(--green);padding:6px;background:var(--sim-bg);box-shadow:8px 8px 0 var(--blue)}
 div.photo{display:grid;place-items:center;text-align:center;padding:1rem;background:var(--sim-bg);border-style:dashed;color:var(--muted);font:.9rem/1.5 var(--sans)}
 footer{padding:1.5rem 0 2.5rem;font:.9rem var(--sans);color:var(--muted);border-top:1px solid var(--rule)}
-@media (max-width:820px){.hero,.cols,.about{grid-template-columns:1fr;gap:1.5rem}.hero{padding-top:1.25rem}.about .photo{max-width:260px}}
+@media (max-width:820px){.hero,.cols,.about,.cols.has-photo{grid-template-columns:1fr;gap:1.5rem}.hero{padding-top:1.25rem}.about .photo,.cols .photo{max-width:260px}}
+.cols.has-photo{grid-template-columns:1fr 2fr 240px}
 </style>
 </head>
 <body>
@@ -114,7 +115,7 @@ footer{padding:1.5rem 0 2.5rem;font:.9rem var(--sans);color:var(--muted);border-
         <li>Density functional theory and its limits for strongly correlated systems</li>
         <li>Wannier functions and tight-binding models built from DFT</li>
         <li>Band topology and 2D materials</li>
-        <li>Photonics</li>
+        <li>Silicon Photonics</li>
       </ul>
     </div>
   </section>
@@ -145,15 +146,12 @@ footer{padding:1.5rem 0 2.5rem;font:.9rem var(--sans);color:var(--muted);border-
   </section>
 
   <section id="notes" class="cols">
-    <h2>Notes</h2>
+    <h2>Outside of Physics</h2>
     <div>
-      <p>Short write-ups on things I've worked out for myself.</p>
-      <ul class="plain">
-        <li><a href="#">[Tight-binding graphene from scratch]</a></li>
-        <li><a href="#">[Reading a DFT band structure]</a></li>
-        <li><a href="#">[Convergence tests: cutoffs and k-points]</a></li>
-      </ul>
+      <h3>Playing the flute</h3>
+      <p>Over 14 years ago, I started learning the classical flute. All this while later and my instrument has played such a huge role in my life thus far - providing friendships, solace and ultimately, a source of income. I now teach traditional irish flute and tin whistle both privately and for a comhaltas branch and perform at events with Erin, a harpist and my best friend.</p>
     </div>
+    <img class="photo" src="photo2.png" alt="Photo of me playing the flute">
   </section>
 
   <section id="contact" class="cols">
@@ -161,11 +159,12 @@ footer{padding:1.5rem 0 2.5rem;font:.9rem var(--sans);color:var(--muted);border-
     <ul class="plain">
       <li><a href="mailto:penfolde@tcd.ie">penfolde@tcd.ie</a></li>
       <li><a href="https://github.com/edenpen">github.com/edenpen</a></li>
+      <li><a href="https://www.linkedin.com/in/eden-penfold/">www.linkedin.com/in/eden-penfold</a></li>
       <li><a href="#">CV (PDF)</a></li>
     </ul>
   </section>
 
-  <footer>© 2026 Eden Penfold · psst, click and drag on the background to launch an atom</footer>
+  <footer>© 2026 Eden Penfold · psst, click and drag on the background to create and launch an atom</footer>
 </div>
 
 <script>
