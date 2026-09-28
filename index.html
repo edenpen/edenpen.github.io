@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> Eden Penfold . Condensed Matter Physics</title>
+<title>Eden Penfold · Condensed Matter Physics</title>
 <meta name="description" content="Research notes and projects in computational condensed matter physics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,15 +20,15 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:1.125rem/1.65 var(--serif)}
+body{margin:0;background:var(--paper);color:var(--ink);font:1.0625rem/1.6 var(--serif)}
 a{color:var(--green);text-underline-offset:3px}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 1.5rem}
-nav{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1.25rem 0;font:500 .95rem var(--sans)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 1.25rem}
+nav{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;font:500 .95rem var(--sans)}
 nav a{color:var(--ink);text-decoration:none}
-nav a:hover{color:var(--green)}
+nav a:hover{color:var(--blue)}
 nav .name{margin-right:auto;color:var(--green)}
-.hero{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;align-items:center;padding:3.5rem 0 4rem}
+.hero{display:grid;grid-template-columns:1fr 1.1fr;gap:2rem;align-items:center;padding:2rem 0 2.5rem}
 h1{font-size:clamp(2.4rem,5.5vw,3.9rem);line-height:1.05;font-weight:600;letter-spacing:-.02em;margin:0 0 1.25rem}
 .lede{color:var(--muted);max-width:34rem;margin:0}
 canvas{display:block;width:100%;border:1px solid var(--rule);background:var(--sim-bg)}
@@ -37,28 +37,39 @@ canvas{display:block;width:100%;border:1px solid var(--rule);background:var(--si
 .ctl label{min-width:8.5rem}
 .ctl input{flex:1;min-width:6rem;accent-color:var(--green)}
 .ctl button{font:inherit;padding:.3rem .8rem;border:1px solid var(--rule);background:transparent;color:var(--ink);border-radius:4px;cursor:pointer}
-.ctl button:hover{border-color:var(--green)}
+.ctl button:hover{border-color:var(--blue);color:var(--blue)}
 .ctl output{min-width:4.5rem;text-align:right;font-variant-numeric:tabular-nums}
 .cap{font:.85rem/1.5 var(--sans);color:var(--muted);margin:.9rem 0 0}
-section{padding:3rem 0;border-top:1px solid var(--rule)}
-h2{font-size:1.9rem;font-weight:600;margin:0 0 1.5rem;letter-spacing:-.01em}
-.cols{display:grid;grid-template-columns:1fr 2fr;gap:3rem}
-.cols>h2{margin:0}
-.item{padding:1.25rem 0;border-bottom:1px solid var(--rule)}
-.item:first-child{padding-top:0}
+section{padding:2rem 0;border-top:1px solid var(--rule)}
+h2{font-size:1.9rem;font-weight:600;margin:0 0 1.25rem;letter-spacing:-.01em;border-bottom:3px solid var(--blue);display:inline-block;padding-bottom:.15rem}
+.cols{display:grid;grid-template-columns:1fr 2fr;gap:2rem}
+.cols>h2{margin:0;justify-self:start;align-self:start}
+.item{padding:1.1rem .85rem;border-bottom:1px solid var(--rule);border-left:3px solid transparent;transition:background .2s,border-color .2s}
+.item:hover{background:var(--sim-bg);border-left-color:var(--blue)}
 .item h3{font-size:1.25rem;margin:0 0 .3rem;font-weight:600}
+.item h4{font:500 .95rem var(--sans);color:var(--blue);margin:0 0 .1rem}
+.item h5{font:400 .85rem var(--sans);color:var(--muted);margin:0 0 .6rem}
 .item p{margin:0;color:var(--muted)}
 .tags{font:.85rem var(--sans);color:var(--blue);margin-top:.5rem!important}
 .tags a{color:var(--green)}
 ul.plain{list-style:none;padding:0;margin:0}
 ul.plain li{padding:.35rem 0}
-.about{display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:start}
+.about ul.plain li{position:relative;padding-left:1.9rem}
+.about ul.plain li::before,.about ul.plain li::after{content:"";position:absolute;border-radius:50%;background:var(--blue)}
+.about ul.plain li::before{width:7px;height:7px;left:calc(.75rem - 3.5px);top:calc(.98em + .35rem - 3.5px);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--blue)}
+.about ul.plain li::after{width:4px;height:4px;left:calc(.75rem - 2px);top:calc(.98em + .35rem - 2px);animation:orbit 3s linear infinite}
+.about ul.plain li:nth-child(2)::after{animation-delay:-.7s}
+.about ul.plain li:nth-child(3)::after{animation-delay:-1.4s}
+.about ul.plain li:nth-child(4)::after{animation-delay:-2.1s}
+@keyframes orbit{from{transform:rotate(0) translateX(7.5px)}to{transform:rotate(360deg) translateX(7.5px)}}
+@media (prefers-reduced-motion:reduce){.about ul.plain li::after{animation:none;transform:translateX(7.5px)}}
+.about{display:grid;grid-template-columns:240px 1fr;gap:2rem;align-items:start}
 .about p{margin:0 0 1rem}
 /* Photo: replace the placeholder div with <img class="photo" src="photo.jpg" alt="Portrait of Your Name"> */
 .photo{width:100%;aspect-ratio:2/3;object-fit:cover;border:2px solid var(--green);padding:6px;background:var(--sim-bg);box-shadow:8px 8px 0 var(--blue)}
 div.photo{display:grid;place-items:center;text-align:center;padding:1rem;background:var(--sim-bg);border-style:dashed;color:var(--muted);font:.9rem/1.5 var(--sans)}
-footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:1px solid var(--rule)}
-@media (max-width:820px){.hero,.cols,.about{grid-template-columns:1fr;gap:1.75rem}.hero{padding-top:1.5rem}.about .photo{max-width:260px}}
+footer{padding:1.5rem 0 2.5rem;font:.9rem var(--sans);color:var(--muted);border-top:1px solid var(--rule)}
+@media (max-width:820px){.hero,.cols,.about{grid-template-columns:1fr;gap:1.5rem}.hero{padding-top:1.25rem}.about .photo{max-width:260px}}
 </style>
 </head>
 <body>
@@ -92,13 +103,13 @@ footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:
   </header>
 
   <section id="about" class="about">
-  <img class="photo" src="photo.png" alt="Photo of me
+    <img class="photo" src="photo.png" alt="Photo of me">
     <div>
       <h2>About</h2>
       <p>My research interests fall into the area of computational condensed matter physics. My first research project was in the summer of 2025 at Trinity, supervised by Dr David O'Regan. I wrote tight-binding code in Python to calculate band structures, densities of states and optical properties of 3D crystals, and used Fermi's golden rule to connect the electronic structure to the dielectric function. And so began my passion for this area of physics. This summer I was a Summer Fellow at the Tyndall National Institute. I investigated the impact of Germanium concentration in SiGe on the electronic and optical properties of G-centre defects in Silicon.</p>
       <p>I like explaining things almost as much as working them out. I'm a teaching assistant in the School of Mathematics, running weekly tutorials in linear algebra and calculus, and I spent two years as a Student2Student mentor for first-year Theoretical Physics students. I have worked as the Public Relations Officer for the Theoretical Physics Students Association for 3 years now, and last year, my team placed second at our hackathon with an analysis of Dublin traffic data. Before university, I was a member of the Irish Mathematical Olympiad squad.</p>
       <p>Away from physics, I play and teach traditional Irish music: flute and tin whistle, to students from age five to adults. I was Leinster Fleadh champion in flute slow airs and played in a Leinster-winning under-18 céilí band. I'm a fluent Irish speaker, I studied Irish Sign Language at Trinity, and I swam and ran competitively growing up.</p>
-      <p>Mu current research interests are:</p>
+      <p>My current research interests are:</p>
       <ul class="plain">
         <li>Density functional theory and its limits for strongly correlated systems</li>
         <li>Wannier functions and tight-binding models built from DFT</li>
@@ -112,23 +123,23 @@ footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:
     <h2>Research and projects</h2>
     <div>
       <div class="item">
-        <h3>[A Study of the Electronic and Optical Properties of G-centre Defects in SiGe Materials]</h3>
-        <h4>[Supervised by Dr. Philip Murphy Armando and Kaynat Alvi]</h4>
-        <h5>[June 2026 - present]</h5>
-        <p>[Two sentences: the physical question, and the method you used to approach it.]</p>
+        <h3>A Study of the Electronic and Optical Properties of G-centre Defects in SiGe Materials</h3>
+        <h4>Supervised by Dr. Philip Murphy Armando and Kaynat Alvi</h4>
+        <h5>June 2026 - present</h5>
+        <p>Two sentences: the physical question, and the method you used to approach it.</p>
         <p class="tags">High Performance Computing · VASP · Python · Bash · <a href="https://github.com/yourusername/project">Code</a></p>
       </div>
       <div class="item">
-        <h3>[Tight-binding Models for Optical and Plasmonic response]</h3>
-        <h4>[Supervised by Prof. David O'Regan and Dr. Andrew Burgess]</h4>
-        <h5>[June 2025 - August 2025]</h5>
-        <p>[E.g. a Wannier-based band structure, a Hubbard-model solver, a relaxation and phonon study.]</p>
+        <h3>Tight-binding Models for Optical and Plasmonic response</h3>
+        <h4>Supervised by Prof. David O'Regan and Dr. Andrew Burgess</h4>
+        <h5>June 2025 - August 2025</h5>
+        <p>E.g. a Wannier-based band structure, a Hubbard-model solver, a relaxation and phonon study.</p>
         <p class="tags">Python · Tight-binding · <a href="#">Write-up</a></p>
       </div>
       <div class="item">
-        <h3>[Project title]</h3>
-        <p>[A course project, thesis chapter, or reading project.]</p>
-        <p class="tags">[Tools] · <a href="#">Link</a></p>
+        <h3>Project title</h3>
+        <p>A course project, thesis chapter, or reading project.</p>
+        <p class="tags">Tools · <a href="#">Link</a></p>
       </div>
     </div>
   </section>
@@ -148,13 +159,13 @@ footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:
   <section id="contact" class="cols">
     <h2>Contact</h2>
     <ul class="plain">
-      <li><a href="mailto:you@example.com">penfolde@tcd.ie</a></li>
-      <li><a href="https://github.com/yourusername">github.com/edenpen</a></li>
+      <li><a href="mailto:penfolde@tcd.ie">penfolde@tcd.ie</a></li>
+      <li><a href="https://github.com/edenpen">github.com/edenpen</a></li>
       <li><a href="#">CV (PDF)</a></li>
     </ul>
   </section>
 
-  <footer>© 2026 Eden Penfold</footer>
+  <footer>© 2026 Eden Penfold · psst, click and drag on the background to launch an atom</footer>
 </div>
 
 <script>
@@ -262,6 +273,102 @@ footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:
   document.getElementById('p3').addEventListener('click',function(){preset(2.7,0,.2)});
   window.addEventListener('resize',function(){moved=true});
   read();cur.t=tgt.t;cur.m=tgt.m;cur.p=tgt.p;update();frame();
+})();
+</script>
+
+<script>
+/* Drifting blue atoms that repel each other. Click and drag on empty background to launch one.
+   Colours come from your --blue variable. */
+(function () {
+  var cv = document.createElement('canvas');
+  cv.setAttribute('aria-hidden', 'true');
+  cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;border:0;background:none;pointer-events:none;z-index:0';
+  document.body.prepend(cv);
+  var wrap = document.querySelector('.wrap');
+  if (wrap) wrap.style.cssText += ';position:relative;z-index:1';
+
+  var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = 1, blue = '#2C5F9E', atoms = [], drag = null, last = 0;
+  var reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var K = 2.4e7, SOFT = 900, CUT = 520, MAXA = 36, VMAX = 700;
+
+  function colour() { blue = getComputedStyle(document.documentElement).getPropertyValue('--blue').trim() || blue; }
+  function size() {
+    dpr = window.devicePixelRatio || 1; W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+  }
+  function make(x, y, vx, vy) {
+    return { x: x, y: y, vx: vx, vy: vy, r: 8 + Math.random() * 8, ph: Math.random() * 6.28, sp: 1.5 + Math.random() * 2 };
+  }
+  function add(a) { atoms.push(a); if (atoms.length > MAXA) atoms.shift(); }
+
+  function step(dt) {
+    var i, j, a, b, dx, dy, d2, d, f;
+    for (i = 0; i < atoms.length; i++) for (j = i + 1; j < atoms.length; j++) {
+      a = atoms[i]; b = atoms[j]; dx = b.x - a.x; dy = b.y - a.y; d2 = dx * dx + dy * dy;
+      if (d2 > CUT * CUT) continue;
+      d = Math.sqrt(d2) || 1; f = K / (d2 + SOFT) * dt;
+      a.vx -= f * dx / d; a.vy -= f * dy / d; b.vx += f * dx / d; b.vy += f * dy / d;
+    }
+    for (i = 0; i < atoms.length; i++) {
+      a = atoms[i];
+      a.vx += (Math.random() - .5) * 20 * dt; a.vy += (Math.random() - .5) * 20 * dt;
+      var damp = Math.exp(-0.3 * dt), sp = Math.hypot(a.vx, a.vy);
+      if (sp > VMAX) { a.vx *= VMAX / sp; a.vy *= VMAX / sp; }
+      a.vx *= damp; a.vy *= damp; a.x += a.vx * dt; a.y += a.vy * dt; a.ph += a.sp * dt;
+      if (a.x < a.r) { a.x = a.r; a.vx = Math.abs(a.vx) * .9; }
+      if (a.x > W - a.r) { a.x = W - a.r; a.vx = -Math.abs(a.vx) * .9; }
+      if (a.y < a.r) { a.y = a.r; a.vy = Math.abs(a.vy) * .9; }
+      if (a.y > H - a.r) { a.y = H - a.r; a.vy = -Math.abs(a.vy) * .9; }
+    }
+  }
+
+  function atom(a, alpha) {
+    ctx.globalAlpha = .16 * alpha; ctx.fillStyle = blue;
+    ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.283); ctx.fill();
+    ctx.globalAlpha = .35 * alpha; ctx.strokeStyle = blue; ctx.lineWidth = 1.2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(a.x, a.y, a.r * 1.9, 0, 6.283); ctx.globalAlpha = .12 * alpha; ctx.stroke();
+    ctx.globalAlpha = .55 * alpha; ctx.fillStyle = blue;
+    ctx.beginPath(); ctx.arc(a.x + Math.cos(a.ph) * a.r * 1.9, a.y + Math.sin(a.ph) * a.r * 1.9, 2.2, 0, 6.283); ctx.fill();
+    ctx.beginPath(); ctx.arc(a.x, a.y, 2.6, 0, 6.283); ctx.fill();
+  }
+
+  function draw() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    atoms.forEach(function (a) { atom(a, 1); });
+    if (drag) {
+      ctx.globalAlpha = .5; ctx.strokeStyle = blue; ctx.setLineDash([4, 5]); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(drag.x, drag.y); ctx.lineTo(drag.cx, drag.cy); ctx.stroke(); ctx.setLineDash([]);
+      atom({ x: drag.x, y: drag.y, r: 11, ph: 0 }, 1.6);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function frame(t) {
+    var dt = Math.min(.033, (t - last) / 1000 || .016); last = t;
+    if (!reduced) for (var n = 0; n < 4; n++) step(dt / 4);
+    draw(); requestAnimationFrame(frame);
+  }
+
+  /* Only start a launch from empty space, so text stays selectable and links stay clickable */
+  var BLOCK = 'a,button,input,canvas,p,h1,h2,h3,h4,h5,li,label,img,output,ul,footer,nav';
+  addEventListener('pointerdown', function (e) {
+    if (e.button || e.target.closest(BLOCK)) return;
+    drag = { x: e.clientX, y: e.clientY, cx: e.clientX, cy: e.clientY };
+  });
+  addEventListener('pointermove', function (e) { if (drag) { drag.cx = e.clientX; drag.cy = e.clientY; } });
+  addEventListener('pointerup', function () {
+    if (!drag) return;
+    var vx = (drag.cx - drag.x) * 5, vy = (drag.cy - drag.y) * 5;
+    if (Math.hypot(vx, vy) < 30) { vx = (Math.random() - .5) * 300; vy = (Math.random() - .5) * 300; }
+    add(make(drag.x, drag.y, vx, vy)); drag = null;
+  });
+  addEventListener('pointercancel', function () { drag = null; });
+  addEventListener('resize', size);
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change', colour);
+
+  colour(); size();
+  for (var i = 0; i < 12; i++) add(make(Math.random() * W, Math.random() * H, (Math.random() - .5) * 60, (Math.random() - .5) * 60));
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
