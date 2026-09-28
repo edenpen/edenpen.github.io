@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name · Computational condensed matter physics</title>
+<meta name="description" content="Research notes and projects in computational condensed matter physics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+/* Change the palette here. --green is the main colour, --blue the accent. */
+:root{
+  --paper:#F2F5F1; --ink:#14231D; --muted:#52655C; --rule:#CBD7CF; --sim-bg:#E6EDE8;
+  --green:#2E6B4F; --blue:#2C5F9E;
+  --serif:"Newsreader",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0F1B17;--ink:#E4EEE8;--muted:#93A79C;--rule:#26382F;--sim-bg:#15241E;--green:#6FC79A;--blue:#7FAEE8}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:1.125rem/1.65 var(--serif)}
+a{color:var(--green);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.5rem}
+nav{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1.25rem 0;font:500 .95rem var(--sans)}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{color:var(--green)}
+nav .name{margin-right:auto;color:var(--green)}
+.hero{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;align-items:center;padding:3.5rem 0 4rem}
+h1{font-size:clamp(2.4rem,5.5vw,3.9rem);line-height:1.05;font-weight:600;letter-spacing:-.02em;margin:0 0 1.25rem}
+.lede{color:var(--muted);max-width:34rem;margin:0}
+canvas{display:block;width:100%;border:1px solid var(--rule);background:var(--sim-bg)}
+.status{font:.9rem var(--sans);color:var(--ink);margin:.7rem 0 0;font-variant-numeric:tabular-nums}
+.ctl{display:flex;align-items:center;gap:.7rem;margin-top:.55rem;font:.9rem var(--sans);color:var(--muted);flex-wrap:wrap}
+.ctl label{min-width:8.5rem}
+.ctl input{flex:1;min-width:6rem;accent-color:var(--green)}
+.ctl button{font:inherit;padding:.3rem .8rem;border:1px solid var(--rule);background:transparent;color:var(--ink);border-radius:4px;cursor:pointer}
+.ctl button:hover{border-color:var(--green)}
+.ctl output{min-width:4.5rem;text-align:right;font-variant-numeric:tabular-nums}
+.cap{font:.85rem/1.5 var(--sans);color:var(--muted);margin:.9rem 0 0}
+section{padding:3rem 0;border-top:1px solid var(--rule)}
+h2{font-size:1.9rem;font-weight:600;margin:0 0 1.5rem;letter-spacing:-.01em}
+.cols{display:grid;grid-template-columns:1fr 2fr;gap:3rem}
+.cols>h2{margin:0}
+.item{padding:1.25rem 0;border-bottom:1px solid var(--rule)}
+.item:first-child{padding-top:0}
+.item h3{font-size:1.25rem;margin:0 0 .3rem;font-weight:600}
+.item p{margin:0;color:var(--muted)}
+.tags{font:.85rem var(--sans);color:var(--blue);margin-top:.5rem!important}
+.tags a{color:var(--green)}
+ul.plain{list-style:none;padding:0;margin:0}
+ul.plain li{padding:.35rem 0}
+.about{display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:start}
+.about p{margin:0 0 1rem}
+/* Photo: replace the placeholder div with <img class="photo" src="photo.jpg" alt="Portrait of Your Name"> */
+.photo{width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--rule)}
+div.photo{display:grid;place-items:center;text-align:center;padding:1rem;background:var(--sim-bg);border-style:dashed;color:var(--muted);font:.9rem/1.5 var(--sans)}
+footer{padding:2rem 0 3rem;font:.9rem var(--sans);color:var(--muted);border-top:1px solid var(--rule)}
+@media (max-width:820px){.hero,.cols,.about{grid-template-columns:1fr;gap:1.75rem}.hero{padding-top:1.5rem}.about .photo{max-width:260px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="name" href="#top">Your Name</a>
+    <a href="#about">About</a>
+    <a href="#research">Research</a>
+    <a href="#notes">Notes</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <h1>Simulating how many bodies become a material.</h1>
+      <p class="lede">I'm a theoretical physics student at [University], working on computational condensed matter: numerical methods for interacting electrons, magnetism, and how solids settle into equilibrium.</p>
+    </div>
+    <div>
+      <canvas id="bands" role="img" aria-label="Tight-binding band structure of a honeycomb lattice along Gamma, M, K, Gamma, with its density of states"></canvas>
+      <p class="status" id="st"></p>
+      <div class="ctl"><label for="st_t">Hopping t</label><input id="st_t" type="range" min="1.5" max="3.2" step="0.05" value="2.7"><output id="ot"></output></div>
+      <div class="ctl"><label for="st_m">Sublattice potential m</label><input id="st_m" type="range" min="0" max="3" step="0.05" value="0"><output id="om"></output></div>
+      <div class="ctl"><label for="st_p">Second-neighbour t′</label><input id="st_p" type="range" min="-0.3" max="0.3" step="0.01" value="0"><output id="op"></output></div>
+      <div class="ctl">
+        <button id="p1" type="button">Graphene</button>
+        <button id="p2" type="button">hBN-like</button>
+        <button id="p3" type="button">Graphene, t′ ≠ 0</button>
+      </div>
+      <p class="cap">Two-band tight-binding model of a honeycomb lattice with one p<sub>z</sub> orbital per atom, the kind of π-band picture you would fit to DFT with Wannier functions. Left: bands along Γ–M–K–Γ. Right: density of states. Energies are measured from the Fermi level at half filling; green states are occupied and blue are empty. A sublattice potential m breaks inversion symmetry and opens a gap, as in hBN, and t′ tilts the bands and shifts the Dirac point.</p>
+    </div>
+  </header>
+
+  <section id="about" class="about">
+    <div class="photo">Your photo here.<br>Replace this box with an image tag (see the comment in the code).</div>
+    <div>
+      <h2>About</h2>
+      <p>[A short paragraph on who you are, where you study, and what drew you to computational condensed matter.]</p>
+      <p>I'm currently interested in:</p>
+      <ul class="plain">
+        <li>Density functional theory and its limits for strongly correlated systems</li>
+        <li>Wannier functions and tight-binding models built from DFT</li>
+        <li>Band topology and 2D materials</li>
+        <li>Structural relaxation and machine-learned interatomic potentials</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="research" class="cols">
+    <h2>Research and projects</h2>
+    <div>
+      <div class="item">
+        <h3>[Project title]</h3>
+        <p>[Two sentences: the physical question, and the method you used to approach it.]</p>
+        <p class="tags">Python · NumPy · Quantum ESPRESSO · <a href="https://github.com/yourusername/project">Code</a></p>
+      </div>
+      <div class="item">
+        <h3>[Project title]</h3>
+        <p>[E.g. a Wannier-based band structure, a Hubbard-model solver, a relaxation and phonon study.]</p>
+        <p class="tags">VASP · Wannier90 · <a href="#">Write-up</a></p>
+      </div>
+      <div class="item">
+        <h3>[Project title]</h3>
+        <p>[A course project, thesis chapter, or reading project.]</p>
+        <p class="tags">[Tools] · <a href="#">Link</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes" class="cols">
+    <h2>Notes</h2>
+    <div>
+      <p>Short write-ups on things I've worked out for myself.</p>
+      <ul class="plain">
+        <li><a href="#">[Tight-binding graphene from scratch]</a></li>
+        <li><a href="#">[Reading a DFT band structure]</a></li>
+        <li><a href="#">[Convergence tests: cutoffs and k-points]</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="cols">
+    <h2>Contact</h2>
+    <ul class="plain">
+      <li><a href="mailto:you@example.com">you@example.com</a></li>
+      <li><a href="https://github.com/yourusername">github.com/yourusername</a></li>
+      <li><a href="#">CV (PDF)</a></li>
+    </ul>
+  </section>
+
+  <footer>© 2026 Your Name</footer>
+</div>
+
+<script>
+(function(){
+  /* Honeycomb tight-binding: H(k) = [[m + t'(|f|^2-3), -t f],[-t f*, -m + t'(|f|^2-3)]]
+     E±(k) = t'(|f|^2-3) ± sqrt(m^2 + t^2 |f|^2),  |f|^2 = 3 + 2cos(p1) + 2cos(p2) + 2cos(p1-p2),
+     with p1 = k.a1, p2 = k.a2. One electron per orbital pair, so the Fermi level is the median state energy. */
+  var S3=Math.sqrt(3),cv=document.getElementById('bands'),ctx=cv.getContext('2d'),st=document.getElementById('st'),
+      sT=document.getElementById('st_t'),sM=document.getElementById('st_m'),sP=document.getElementById('st_p'),
+      oT=document.getElementById('ot'),oM=document.getElementById('om'),oP=document.getElementById('op'),
+      reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,col={},moved=true,
+      cur={t:2.7,m:0,p:0},tgt={t:2.7,m:0,p:0},EF=0,gap=0,dmax=1;
+
+  /* k-path Gamma -> M -> K -> Gamma (units of pi/a) */
+  var pts=[[0,0],[1,1/S3],[4/3,0],[0,0]],cnt=[123,71,141],pF=[],i,s,q;
+  for(s=0;s<3;s++)for(q=0;q<cnt[s]+(s==2?1:0);q++){
+    var u=q/cnt[s],kx=pts[s][0]+(pts[s+1][0]-pts[s][0])*u,ky=pts[s][1]+(pts[s+1][1]-pts[s][1])*u,
+        p1=Math.PI*kx,p2=Math.PI*(kx/2+ky*S3/2);
+    pF.push(3+2*Math.cos(p1)+2*Math.cos(p2)+2*Math.cos(p1-p2));
+  }
+  var NP=pF.length,pLo=new Float32Array(NP),pHi=new Float32Array(NP);
+
+  /* uniform Brillouin-zone mesh for the Fermi level and DOS */
+  var n=90,NM=n*n,mF=new Float32Array(NM),en=new Float32Array(2*NM),srt=new Float32Array(2*NM);
+  for(i=0;i<n;i++)for(var j=0;j<n;j++){
+    var a1=2*Math.PI*(i+.5)/n,a2=2*Math.PI*(j+.5)/n;
+    mF[i*n+j]=3+2*Math.cos(a1)+2*Math.cos(a2)+2*Math.cos(a1-a2);
+  }
+  var NB=160,BW=20/NB,hist=new Float32Array(NB),dos=new Float32Array(NB),kw=[],ks=0,k;
+  for(k=-7;k<=7;k++){var w=Math.exp(-Math.pow(k*BW,2)/(2*.14*.14));kw.push(w);ks+=w}
+  kw=kw.map(function(x){return x/ks});
+
+  function update(){
+    var t=cur.t,m=cur.m,tp=cur.p,lo=-1e9,hi=1e9,i,c,r;
+    for(i=0;i<NM;i++){r=Math.sqrt(m*m+t*t*mF[i]);c=tp*(mF[i]-3);en[2*i]=c-r;en[2*i+1]=c+r}
+    for(i=0;i<NP;i++){r=Math.sqrt(m*m+t*t*pF[i]);c=tp*(pF[i]-3);pLo[i]=c-r;pHi[i]=c+r;
+      if(pLo[i]>lo)lo=pLo[i];if(pHi[i]<hi)hi=pHi[i]}
+    for(i=0;i<2*NM;i+=2){if(en[i]>lo)lo=en[i];if(en[i+1]<hi)hi=en[i+1]}
+    srt.set(en);srt.sort();EF=(srt[NM-1]+srt[NM])/2;gap=hi-lo;
+    hist.fill(0);dos.fill(0);
+    for(i=0;i<2*NM;i++){var b=Math.floor((en[i]-EF+10)/BW);if(b>=0&&b<NB)hist[b]++}
+    dmax=1e-9;
+    for(var b2=0;b2<NB;b2++){var v=0;for(k=-7;k<=7;k++){var bb=b2+k;if(bb>=0&&bb<NB)v+=hist[bb]*kw[k+7]}
+      dos[b2]=v;if(v>dmax)dmax=v}
+  }
+  function colors(){var s=getComputedStyle(document.documentElement);
+    ['--green','--blue','--ink','--muted','--rule','--sim-bg'].forEach(function(v){col[v]=s.getPropertyValue(v).trim()})}
+  colors();
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){colors();moved=true});
+
+  function draw(){
+    var dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=Math.round(W*.93);
+    cv.style.height=H+'px';
+    if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+    var L=50,R=10,T=12,B=30,pw=W-L-R,bw=pw*.7,gx=L+bw+8,dw=pw-bw-8,ph=H-T-B;
+    function Y(e){return T+(1-(e+10)/20)*ph}
+    ctx.font='12px "IBM Plex Sans",system-ui,sans-serif';ctx.lineWidth=1;
+    ctx.strokeStyle=col['--rule'];ctx.fillStyle=col['--muted'];ctx.textAlign='right';
+    [-10,-5,5,10].forEach(function(e){ctx.beginPath();ctx.moveTo(L,Y(e));ctx.lineTo(L+pw,Y(e));ctx.stroke();ctx.fillText(e,L-6,Y(e)+4)});
+    ctx.fillText('0',L-6,Y(0)+4);
+    ctx.save();ctx.translate(12,T+ph/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('E − E_F (eV)',0,0);ctx.restore();
+    ctx.strokeRect(L,T,bw,ph);ctx.strokeRect(gx,T,dw,ph);
+    [[0,'Γ','left'],[123/(NP-1),'M','center'],[194/(NP-1),'K','center'],[1,'Γ','right']].forEach(function(l){
+      var x=L+l[0]*bw;ctx.textAlign=l[2];ctx.fillText(l[1],x,H-10);
+      if(l[0]>0&&l[0]<1){ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,T+ph);ctx.stroke()}});
+    ctx.textAlign='center';ctx.fillText('DOS',gx+dw/2,H-10);
+    ctx.save();ctx.beginPath();ctx.rect(L,T,pw,ph);ctx.clip();
+    /* DOS, shaded by occupation */
+    [[0,NB/2,'--green'],[NB/2,NB,'--blue']].forEach(function(r){
+      ctx.fillStyle=col[r[2]];ctx.globalAlpha=.4;ctx.beginPath();ctx.moveTo(gx,Y((r[0])*BW-10));
+      for(var b=r[0];b<r[1];b++)ctx.lineTo(gx+dos[b]/dmax*dw*.94,Y((b+.5)*BW-10));
+      ctx.lineTo(gx,Y(r[1]*BW-10));ctx.closePath();ctx.fill();
+      ctx.globalAlpha=1;ctx.strokeStyle=col[r[2]];ctx.lineWidth=1.5;ctx.beginPath();
+      for(var b=r[0];b<r[1];b++){var x=gx+dos[b]/dmax*dw*.94,y=Y((b+.5)*BW-10);b==r[0]?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+      ctx.stroke()});
+    /* bands */
+    [[pLo,'--green'],[pHi,'--blue']].forEach(function(bd){
+      ctx.strokeStyle=col[bd[1]];ctx.lineWidth=2.4;ctx.beginPath();
+      for(var i=0;i<NP;i++){var x=L+i/(NP-1)*bw,y=Y(bd[0][i]-EF);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+      ctx.stroke()});
+    ctx.setLineDash([5,4]);ctx.strokeStyle=col['--ink'];ctx.lineWidth=1.2;ctx.beginPath();
+    ctx.moveTo(L,Y(0));ctx.lineTo(L+pw,Y(0));ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    var g=gap<.01?(cur.m<.005&&Math.abs(cur.p)<.3?'gapless, Dirac point at K':'gapless'):(gap<0?'metallic, bands overlap':'gap = '+gap.toFixed(2)+' eV');
+    st.textContent=g+'   ·   t = '+cur.t.toFixed(2)+', m = '+cur.m.toFixed(2)+', t′ = '+cur.p.toFixed(2)+' eV';
+  }
+  function frame(){
+    var d=Math.abs(tgt.t-cur.t)+Math.abs(tgt.m-cur.m)+Math.abs(tgt.p-cur.p);
+    if(d>0){
+      if(reduced||d<.002){cur.t=tgt.t;cur.m=tgt.m;cur.p=tgt.p}
+      else{cur.t+=(tgt.t-cur.t)*.16;cur.m+=(tgt.m-cur.m)*.16;cur.p+=(tgt.p-cur.p)*.16}
+      update();moved=true;
+    }
+    if(moved){draw();moved=false}
+    requestAnimationFrame(frame);
+  }
+  function read(){
+    tgt.t=+sT.value;tgt.m=+sM.value;tgt.p=+sP.value;
+    oT.textContent=tgt.t.toFixed(2)+' eV';oM.textContent=tgt.m.toFixed(2)+' eV';oP.textContent=tgt.p.toFixed(2)+' eV';
+  }
+  function preset(t,m,p){sT.value=t;sM.value=m;sP.value=p;read()}
+  [sT,sM,sP].forEach(function(el){el.addEventListener('input',read)});
+  document.getElementById('p1').addEventListener('click',function(){preset(2.7,0,0)});
+  document.getElementById('p2').addEventListener('click',function(){preset(2.3,2.9,0)});
+  document.getElementById('p3').addEventListener('click',function(){preset(2.7,0,.2)});
+  window.addEventListener('resize',function(){moved=true});
+  read();cur.t=tgt.t;cur.m=tgt.m;cur.p=tgt.p;update();frame();
+})();
+</script>
+</body>
+</html>
